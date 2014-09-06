@@ -1,8 +1,8 @@
 FROM node
 
 COPY . /src
-RUN cd src
-RUN npm install
+CMD ["cd", "/src"]
+CMD ["npm", "install"]
 
 EXPOSE 8080
 CMD ["node", "/src/index.js"]
