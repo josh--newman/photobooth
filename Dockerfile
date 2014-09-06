@@ -1,12 +1,4 @@
-# DOCKER-VERSION 0.3.4
-
-FROM centos:centos6
-
-# Install Node.js and npm
-RUN     yum install -y npm
-
-# Enable EPEL for Node.js
-RUN     rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
+FROM node
 
 COPY . /src
 RUN cd /src; npm install
