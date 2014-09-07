@@ -6,6 +6,7 @@ var app = require("http").createServer(handler),
     path = require("path"),
     fs = require("fs")
     port = process.argv[2] || 8080;
+    io = require('socket.io').listen(app);
 
 app.listen(parseInt(port, 10));
 
