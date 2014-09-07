@@ -1,0 +1,39 @@
+
+/* FONTS AND COLOURS */
+/*
+  $weddingBrown: #996633;
+  $darkBrown: #4A2602;
+  $straw: #D7C284;
+  $seashell: #FBF8EC;
+  $default-font-family: "Great Vibes", "Cardo", "Helvetica", Helvetica, Arial, sans-serif;
+*/
+
+@import url(http://fonts.googleapis.com/css?family=Great+Vibes);
+@import url(http://fonts.googleapis.com/css?family=Cardo);
+
+body {
+  font-family: "Cardo", "Helvetica", Helvetica, Arial, sans-serif;
+  background: url('http://i.imgur.com/paM5djy.png') repeat-x;
+  color: #996633;
+}
+
+.fancy {
+  text-align: center;
+  font-family: "Great Vibes", "Cardo", "Helvetica", Arial, sans-serif;
+  font-size: 5em;
+  margin: 0;
+}
+
+div.image-preview {
+  width: 55em;
+  height: 36.6em;
+  background-color: #FFFFFD;
+  margin: 0 auto;
+  border: 5px solid #D7C284;
+}
+
+div.image-preview p {
+  text-align: center;
+  line-height: 36.6em;
+  color: #bbb;
+}
