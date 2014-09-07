@@ -1,13 +1,15 @@
-//-- Basic static web server
+//-- Socket.io File Server
 //-- https://gist.github.com/rpflorence/701407
 
-var http = require("http"),
+var app = require("http").createServer(handler),
     url = require("url"),
     path = require("path"),
     fs = require("fs")
-    port = process.argv[2] || 8888;
+    port = process.argv[2] || 8080;
 
-http.createServer(function(request, response) {
+app.listen(parseInt(port, 10));
+
+function handler (request, response) {
 
   var uri = url.parse(request.url).pathname
     , filename = path.join(process.cwd(), uri);
@@ -35,6 +37,6 @@ http.createServer(function(request, response) {
       response.end();
     });
   });
-}).listen(parseInt(port, 10));
+}
 
-console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
+console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown\n");
