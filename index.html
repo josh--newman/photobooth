@@ -11,10 +11,41 @@
 <div class="image-preview">
   <p>No preview available</p>
 </div>
+<div id="overlay">
+  <h1 id="countdown">5</h1>
+</div>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script src="/socket.io/socket.io.js"></script>
   <script>
     var socket = io.connect();
+  </script>
+  <script>
+  $("body").on("click", function() {
+    takePhoto(function() {
+      $("#overlay").fadeOut("slow");
+    });
+  });
+
+  function takePhoto(callback) {
+    $("#overlay").fadeIn("slow", function() {
+      displayCountdown();
+    });
+  };
+
+  function displayCountdown() {
+    var count = 5;
+    var interval = setInterval(function() {
+      $("#countdown").html(--count);
+      if(count == 0) {
+        clearInterval(interval);
+        $("#countdown").html("Bam!");
+      }
+
+    }, 1000);
+  };
+
+
   </script>
 </body>
 </html>
