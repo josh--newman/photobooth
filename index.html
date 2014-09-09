@@ -26,7 +26,7 @@
   });
 
   function takePhoto() {
-
+    socket.emit("takePhoto");
   };
 
   function displayCountdown() {
@@ -39,6 +39,7 @@
           $("#countdown").html("Bam!");
 
           //-- take photo here
+          takePhoto();
 
           $("#overlay").delay(1000).fadeOut("slow", function() {
             $("#countdown").html("Ready?");

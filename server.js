@@ -41,3 +41,14 @@ function handler (request, response) {
 }
 
 console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown\n");
+
+//-- Socket.io commands
+io.set('log level', 1); // reduce logging
+
+io.on("connection", function(socket) {
+  //-- Take the photo and save to drive
+  socket.on('takePhoto', function() {
+    console.log("Taking photo...");
+    console.log("Done");
+  });
+});
