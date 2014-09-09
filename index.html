@@ -12,7 +12,7 @@
   <p>No preview available</p>
 </div>
 <div id="overlay">
-  <h1 id="countdown">5</h1>
+  <h1 id="countdown">Ready?</h1>
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -30,11 +30,18 @@
   };
 
   function displayCountdown() {
+    //-- Disable tap events
+    $("body").unbind("click touchstart");
+
     $("#overlay").fadeIn("slow", function() {
       var count = 5;
+      setTimeout(function() {
+        $("#countdown").html(count);
+      }, 1000);
+
       var interval = setInterval(function() {
-        $("#countdown").html(--count);
-        if(count == 0) {
+        $("#countdown").html(count--);
+        if(count < 0) {
           clearInterval(interval);
           $("#countdown").html("Bam!");
 
@@ -42,6 +49,12 @@
           takePhoto();
 
           $("#overlay").delay(1000).fadeOut("slow", function() {
+            //-- Re-enable tap events
+            $("body").bind("click touchstart", function() {
+              displayCountdown();
+            });
+
+            //-- Reset ready for next photo
             $("#countdown").html("Ready?");
           });
         }
