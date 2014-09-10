@@ -8,6 +8,16 @@ var app = require("http").createServer(handler),
     port = process.argv[2] || 8080;
     io = require('socket.io').listen(app);
 
+//-- gphoto2 Setup
+var gphoto2 = require("gphoto2");
+var GPhoto = new gphoto2.GPhoto2();
+var camera;
+GPhoto.list(function(list) {
+  if (list.length === 0) return;
+  camera = list[0];
+  console.log("Found", camera.model);
+});
+
 app.listen(parseInt(port, 10));
 
 function handler (request, response) {
@@ -48,7 +58,15 @@ io.set('log level', 1); // reduce logging
 io.on("connection", function(socket) {
   //-- Take the photo and save to drive
   socket.on('takePhoto', function() {
+
     console.log("Taking photo...");
-    console.log("Done");
+    camera.takePicture({
+      targetPath: "/tmp/foo.XXXXX"
+    }, function(er, tmpname) {
+      console.log("tmpname: " + tmpname);
+      fs.renameSync(tmpname, __dirname + "/photos/picture.jpg")
+      console.log("Done");
+    });
+
   });
 });
