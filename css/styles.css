@@ -17,10 +17,14 @@ body {
   color: #996633;
 }
 
+h1 {
+  font-weight: normal;
+}
+
 .fancy {
   text-align: center;
   font-family: "Great Vibes", "Cardo", "Helvetica", Arial, sans-serif;
-  font-size: 5em;
+  font-size: 4.5em;
   margin: 0;
 }
 
