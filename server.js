@@ -1,12 +1,19 @@
 //-- Socket.io File Server
 //-- https://gist.github.com/rpflorence/701407
 
-var app = require("http").createServer(handler),
-    url = require("url"),
-    path = require("path"),
-    fs = require("fs")
-    port = process.argv[2] || 8080;
-    io = require('socket.io').listen(app);
+var PORT = 8080;
+var app = require("express")();
+var server = require("http").Server(app);
+var io = require('socket.io').listen(server);
+
+app.get("/", function(req, res) {
+  // res.sendfile(__dirname + "/css/styles.css");
+  res.sendfile(__dirname + "/index.html");
+});
+
+var server = app.listen(PORT, function() {
+  console.log("Listening on port %d", server.address().port);
+});
 
 //-- gphoto2 Setup
 var gphoto2 = require("gphoto2");
@@ -17,40 +24,6 @@ GPhoto.list(function(list) {
   camera = list[0];
   console.log("Found", camera.model);
 });
-
-app.listen(parseInt(port, 10));
-
-function handler (request, response) {
-
-  var uri = url.parse(request.url).pathname
-    , filename = path.join(process.cwd(), uri);
-
-  path.exists(filename, function(exists) {
-    if(!exists) {
-      response.writeHead(404, {"Content-Type": "text/plain"});
-      response.write("404 Not Found\n");
-      response.end();
-      return;
-    }
-
-    if (fs.statSync(filename).isDirectory()) filename += '/index.html';
-
-    fs.readFile(filename, "binary", function(err, file) {
-      if(err) {
-        response.writeHead(500, {"Content-Type": "text/plain"});
-        response.write(err + "\n");
-        response.end();
-        return;
-      }
-
-      response.writeHead(200);
-      response.write(file, "binary");
-      response.end();
-    });
-  });
-}
-
-console.log("Static file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown\n");
 
 //-- Socket.io commands
 io.set('log level', 1); // reduce logging
