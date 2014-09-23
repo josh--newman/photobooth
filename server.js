@@ -8,6 +8,8 @@ var server = require("http").Server(app);
 var io = require("socket.io")(server);
 var fs = require("fs");
 
+var PHOTOS_DIR = "/photos";
+
 app.use(express.static(__dirname));
 
 server.listen(PORT, function() {
@@ -31,16 +33,22 @@ GPhoto.list(function(list) {
 io.on("connection", function(socket) {
   //-- Take the photo and save to drive
   socket.on('takePhoto', function() {
-    if (camera) {
-      console.log("Taking photo...");
-      camera.takePicture({
-        targetPath: "/tmp/foo.XXXXX"
-      }, function(er, tmpname) {
-        console.log("tmpname: " + tmpname);
-        fs.renameSync(tmpname, __dirname + "/photos/picture.jpg");
-        console.log("Done");
-      });
-    }
-
+    takePhoto();
   });
 });
+
+function takePhoto() {
+  if (camera) {
+    console.log("Taking photo...");
+    camera.takePicture({
+      targetPath: "/tmp/foo.XXXXX"
+    }, function(er, tmpname) {
+      console.log("tmpname: " + tmpname);
+      var datetime = new Date().toISOString();
+      console.log(datetime);
+      fs.renameSync(tmpname, __dirname + PHOTOS_DIR +
+                             "/photobooth" + datetime + ".jpg");
+      console.log("Done");
+    });
+  }
+};
