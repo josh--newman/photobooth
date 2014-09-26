@@ -4,6 +4,7 @@ FROM resin/rpi-raspbian
 # install required packages
 RUN apt-get update
 RUN apt-get install -y wget dialog
+RUN apt-get install libgphoto2-2-dev
 
 # install nodejs
 RUN wget http://node-arm.herokuapp.com/node_latest_armhf.deb
